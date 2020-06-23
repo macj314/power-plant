@@ -4,19 +4,20 @@ class Plant {
     this.soil = 0;
     this.light = 0;
   }
-
-  const hydrate = (plant) => {
-    return {
-      ...plant,
-      water: (plant.water || 0) + 1
+  
+  const changeState = (prop) => {
+    return (value) => {
+      return (state) => ({
+        ...state,
+        [prop] : (state[prop] || 0) + value
+      })
     }
-  };
-
-  feed() {
-    this.soil ++
   }
 
-  giveLight() {
-    this.light ++
-  }
+const feed = changeState("soil");
+const hydrate = changeState("water");
+const giveLight = changeState("light");
+const blueFood = changeState("soil")(5)
+const greenFood = changeState("soil")(10)
+const yuckyFood = changeState("soil")(-5)
 }
